@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Studentlist_1</title>
+
+    <style>
+        .pWrap {
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="data-container">
+
+        </section>
+    </main>
+
+    <template class="data-template">
+        <div class="pWrap">
+            <p data-name></p>
+            <p data-house></p>
+        </div>
+    </template>
+    <script>
+        let thisJson;
+        let dest = document.querySelector(".data-container");
+
+
+        document.addEventListener("DOMContentLoaded", hentJson);
+
+        async function hentJson() {
+
+        let myJson = await fetch("http://petlatkea.dk/2019/students1991.json");
+        wpJSON = await myJson.json();
+        visJson();
+        }
+
+        function visJson() {
+
+        let myTemplate = document.querySelector(".data-template");
+
+        wpJSON.forEach(post => {
+
+                let klon = myTemplate.cloneNode(true).content;
+                klon.querySelector("[data-name]").textContent = post.fullname;
+                klon.querySelector("[data-house]").textContent = post.house;
+
+
+                dest.appendChild(klon);
+            });
+        }
+
+    
+    </script>
+</body>
+</html>

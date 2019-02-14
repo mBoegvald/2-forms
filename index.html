@@ -1,0 +1,87 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Studentlist_1</title>
+
+    <style>
+        .pWrap {
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="buttonContainer">
+            <button class="sortButton" data-category="All">All</button>
+            <button class="sortButton" data-category="All">First name</button>
+            <button class="sortButton" data-category="All">Last name</button>
+            <button class="sortButton" data-category="Gryffindor">Gryffindor</button>
+            <button class="sortButton" data-category="Hufflepuff">Hufflepuff</button>
+            <button class="sortButton" data-category="Ravenclaw">Ravenclaw</button>
+            <button class="sortButton" data-category="Slytherin">Slytherin</button>
+            
+        </div>
+        <section class="data-container">
+
+        </section>
+    </main>
+
+    <template class="data-template">
+        <div class="pWrap">
+            <p data-name></p>
+            <p data-house></p>
+        </div>
+    </template>
+    <script>
+        let thisJson;
+        let dest = document.querySelector(".data-container");
+        let sortFilter = "all";
+
+
+        document.addEventListener("DOMContentLoaded", hentJson);
+
+        document.querySelectorAll(".sortButton").forEach(knap => {
+            knap.addEventListener("click", filtrering)
+        });
+
+        function filtrering() {
+            dest.textContent = "";
+            sortFilter = this.getAttribute("data-category");
+            visJson();
+        }
+
+        async function hentJson() {
+
+        let myJson = await fetch("http://petlatkea.dk/2019/students1991.json");
+        thisJson = await myJson.json();
+        visJson();
+        }
+
+        function visJson() {
+
+        let myTemplate = document.querySelector(".data-template");
+
+        thisJson.forEach(post => {
+            if (sortFilter == post.house || sortFilter == "All") {
+
+                let klon = myTemplate.cloneNode(true).content;
+                klon.querySelector("[data-name]").textContent = post.fullname;
+                klon.querySelector("[data-house]").textContent = post.house;
+
+
+                dest.appendChild(klon);
+            }
+        });
+    }
+
+    
+    </script>
+</body>
+</html>
