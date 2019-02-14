@@ -1,12 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bar Chart</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .barContainer {
+        display: grid;
+        grid-template-columns: repeat(40, 1fr);
+        height: 500px;
+        grid-gap: 2px;
+        width: 1250px;
+      }
+
+      .barChart {
+        grid-column: span 1;
+        width: 100%;
+        height: 0;
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+        <div class="barContainer">
+            <div class="barChart barChart0"></div>
+            <div class="barChart barChart1"></div>
+            <div class="barChart barChart2"></div>
+            <div class="barChart barChart3"></div>
+            <div class="barChart barChart4"></div>
+            <div class="barChart barChart5"></div>
+            <div class="barChart barChart6"></div>
+            <div class="barChart barChart7"></div>
+            <div class="barChart barChart8"></div>
+            <div class="barChart barChart9"></div>
+            <div class="barChart barChart10"></div>
+            <div class="barChart barChart11"></div>
+            <div class="barChart barChart12"></div>
+            <div class="barChart barChart13"></div>
+            <div class="barChart barChart14"></div>
+            <div class="barChart barChart15"></div>
+            <div class="barChart barChart16"></div>
+            <div class="barChart barChart17"></div>
+            <div class="barChart barChart18"></div>
+            <div class="barChart barChart19"></div>
+            <div class="barChart barChart20"></div>
+            <div class="barChart barChart21"></div>
+            <div class="barChart barChart22"></div>
+            <div class="barChart barChart23"></div>
+            <div class="barChart barChart24"></div>
+            <div class="barChart barChart25"></div>
+            <div class="barChart barChart26"></div>
+            <div class="barChart barChart27"></div>
+            <div class="barChart barChart28"></div>
+            <div class="barChart barChart29"></div>
+            <div class="barChart barChart30"></div>
+            <div class="barChart barChart31"></div>
+            <div class="barChart barChart32"></div>
+            <div class="barChart barChart33"></div>
+            <div class="barChart barChart34"></div>
+            <div class="barChart barChart35"></div>
+            <div class="barChart barChart36"></div>
+            <div class="barChart barChart37"></div>
+            <div class="barChart barChart38"></div>
+            <div class="barChart barChart39"></div>
+            
+        </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", init);
+      const arr = [];
+      let counter = 0;
+      let randomHeight;
+
+      function init() {
+        count();
+      }
+
+      function count() {
+        randomHeight = Math.random() * 35;
+
+        if (counter < 40) {
+            
+          console.log(arr);
+          arr.unshift(counter);
+          arr[0] = randomHeight;
+          document.querySelector(".barChart" + counter).style.height = randomHeight + "px";
+          counter++;
+          setTimeout(count, 1000);
+
+        } else {
+          moveChart()
+
+        }
+    }
+        function moveChart() {
+            if(counter < 40) {
+                console.log(arr);
+                randomHeight = Math.random() * 35;
+                arr.splice(39, 1);
+                arr.unshift(counter);
+                arr[0] = randomHeight;
+                console.log(counter);
+                document.querySelector(".barChart" + counter).style.height = randomHeight + "px";
+                counter++;
+                setTimeout(moveChart, 1000);
+            }
+            else {
+                counter = 0;
+                moveChart();
+            }
+        }
+      
+    </script>
+  </body>
 </html>
