@@ -12,8 +12,6 @@
             padding: 0;
         }
 
-
-
         #container {
             display: grid;
             background-color: beige;
@@ -24,27 +22,25 @@
 
         .dropzone {
             outline: 0.5px solid grey;
-        }
-
-        img {
-            display: none;
-        }
-
-        .thisBody {
-            z-index: 10;
-        }
-
-        
+        }     
 
     </style>
 </head>
 <body class="thisBody">
+
+    <div class="inputs">
+        <input id="x-axis" placeholder="X-axis pieces" type="text">
+        <input id="y-axis" placeholder="Y-axis pieces" type="text">
+        <input id="submit" type="submit">
+    </div>
+    
+    
     <div id="allPieces"></div>
 
-    <img src="" alt="" draggable="true">
+    
 
     <div id="container">
-        
+            <img src="" alt="" draggable="true">
     </div>
 
     <script>
@@ -56,19 +52,26 @@
         
         let natHeight;
         let natWidth; 
+        let numberOfXPieces;
+        let numberOfYPieces;
+
         document.addEventListener("DOMContentLoaded", loadPicture);
+        document.querySelector("#submit").addEventListener("click", letsGO);
 
         function loadPicture() {
             document.querySelector("img").src = imageAddress;
-            document.querySelector("img").onload = letsGO;
+            
         }
 
         function letsGO() {
+
+            document.querySelector("img").style.display = "none";
             natHeight = document.querySelector("img").naturalHeight;
             natWidth = document.querySelector("img").naturalWidth;
 
-            const numberOfXPieces = 3;
-            const numberOfYPieces = 3;
+            numberOfXPieces = document.querySelector("#x-axis").value;
+            numberOfYPieces = document.querySelector("#y-axis").value;
+
 
             const containerWidth = natWidth;
             const containerHeight = natHeight;
@@ -147,7 +150,7 @@
                             dragged.style.top = event.target.style.top;
                             testIfSolved();
                         }
-                        if ( event.target.className == "dropzone" ) {
+                        if ( event.target.className != "dropzone" ) {
                             dragged.style.left = event.pageX + "px";
                             dragged.style.top = event.pageY + "px";
 
@@ -157,22 +160,12 @@
                     document.querySelector("#container").appendChild(piece); 
                 }        
 
-             
-
-        
             }   
             
         }
 
     
-    function testIfSolved() {
-            document.querySelectorAll(".dropzone").forEach(eachZone => {
-                if(eachZone.dataset.piece_id == eachZone.dataset.dropzone_id) {
-                    console.log(eachZone);
-                    document.querySelector(".thisBody").style.backgroundColor = "black";
-                }
-            }
-    )}                 
+                    
     
     </script>
     
