@@ -41,13 +41,15 @@
 <body class="thisBody">
     <div id="allPieces"></div>
 
-        <img src="" alt="" draggable="true">
+    <img src="" alt="" draggable="true">
 
     <div id="container">
         
     </div>
 
     <script>
+        "use strict";
+
         let dragged;
 
         let imageAddress = "https://i.kym-cdn.com/photos/images/newsfeed/001/122/098/673.png";
@@ -108,30 +110,20 @@
                     piece.style.left = Math.random() * 700 + containerWidth + "px";
                     piece.style.top = Math.random() * containerHeight + "px";
 
-                   
-
-              
-
                     document.addEventListener("dragstart", function( event ) {
-                        
                         dragged = event.target;
-                        
                         event.target.style.opacity = .5;
                     }, false);
 
                     document.addEventListener("dragend", function( event ) {
-                        
                         event.target.style.opacity = "";
                     }, false);
 
-                    
                     document.addEventListener("dragover", function( event ) {
-                        
                         event.preventDefault();
                     }, false);
 
                     document.addEventListener("dragenter", function( event ) {
-                        
                         if ( event.target.className == "dropzone" ) {
                             event.target.style.background = "purple";
                         }
@@ -139,7 +131,6 @@
                     }, false);
 
                     document.addEventListener("dragleave", function( event ) {
-                        
                         if ( event.target.className == "dropzone" ) {
                             event.target.style.background = "";
                         }
@@ -148,7 +139,6 @@
 
                     document.addEventListener("drop", function( event ) {
                         event.preventDefault();
-                        
                         if ( event.target.className == "dropzone" ) {
                             event.target.style.background = "";
                             dragged.parentNode.removeChild( dragged );
@@ -157,20 +147,24 @@
                             dragged.style.top = event.target.style.top;
                             testIfSolved();
                         }
-                        if ( event.target.className != "dropzone" )
+                        if ( event.target.className == "dropzone" ) {
                             dragged.style.left = event.pageX + "px";
-                            
-                    }, false);
+                            dragged.style.top = event.pageY + "px";
 
+                        }
 
-                    document.querySelector("#allPieces").appendChild(piece);
+                    });
+                    document.querySelector("#container").appendChild(piece); 
+                }        
 
-                }
-
-        }
+             
 
         
-    }   
+            }   
+            
+        }
+
+    
     function testIfSolved() {
             document.querySelectorAll(".dropzone").forEach(eachZone => {
                 if(eachZone.dataset.piece_id == eachZone.dataset.dropzone_id) {
