@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="debug"></div>
+
+        <canvas id="imageCanvas" width="500" height="600"></canvas>
+
+        <canvas id="mapCanvas" width="500" height="600"></canvas>
+
+        <canvas id="outputCanvas"></canvas>
+
+    <script>
+    
+    "use strict";
+    
+    document.addEventListener("DOMContentLoaded", init);
+    
+    let imageCanvas = document.querySelector("#imageCanvas");
+    let context = imageCanvas.getContext("2d");
+
+    let imgData;
+    let baseImg;
+    let mapImg;
+    let displacementX;
+    let displacementY;
+
+    const MAX_MOVEMENT = 10;
+
+    document.querySelector("canvas").addEventListener("mousemove", mouseMoved);
+    
+    function init() {
+        console.log("init");
+        baseImg = new Image();
+        baseImg.src = "cat.jpg";
+        mapImg = new Image();
+        mapImg.src = "map.jpg";
+        baseImg.addEventListener("load", drawImage); 
+        
+
+    }
+
+    function drawImage() {
+        console.log("loadImage");
+        context.drawImage(baseImg, 0, 0);
+        imageData();
+
+    }
+
+    function imageData() {
+        console.log("imageData");
+        imgData = context.getImageData(0, 0, 500, 600);
+        console.log(imgData.data);
+
+    }
+
+    function mouseMoved(e) {
+        console.log("mouseMoved");
+        console.log(e.offsetX, e.offsetY); 
+
+        let mouseX = e.offsetX;
+        let mouseY = e.offsetY;
+
+        context.putImageData(imgData, 0,0);
+        context.strokeStyle = "lightgreen";
+        context.strokeRect(displacementX + MAX_MOVEMENT, displacementY + MAX_MOVEMENT, imageCanvas.width - (MAX_MOVEMENT*2), imageCanvas.height - (MAX_MOVEMENT*2));
+
+        calcRatio(mouseX, mouseY);
+        
+    }
+
+    function calcRatio(x, y) {
+        x = (x/imageCanvas.width)*2-1;
+        y = (y/imageCanvas.height)*2-1;
+        document.querySelector("#debug").textContent = "x-ratio = " + x + "\r\n";
+        document.querySelector("#debug").textContent += "y-ratio = " + y
+
+        calcDisplacement(x, y)
+    }
+
+    function calcDisplacement(x, y) {
+        displacementX = x*MAX_MOVEMENT;
+        displacementY = y*MAX_MOVEMENT;
+
+    }
+
+    </script>
+    
+</body>
+</html>
